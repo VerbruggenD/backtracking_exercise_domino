@@ -6,7 +6,7 @@ import java.util.Optional;
 
 /**
  *
- * @author r0711421
+ * @author u0002531
  */
 public class Algoritme {
     public Optional<List<Steen>> maakKetting(ArrayList<Steen> todo) {
@@ -16,6 +16,11 @@ public class Algoritme {
             todoArray[i] = todo.get(i);
         }
         return Optional.of(todo);
+    }
+
+    public static boolean checkOgen(Steen steen1, Steen steen2) {
+
+        throw new UnsupportedOperationException();
     }
 }
 

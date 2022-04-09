@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  *
- * @author r0711421
+ * @author u0002531
  */
 public class Steen {
     private int ogen1, ogen2;
