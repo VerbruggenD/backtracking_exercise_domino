@@ -8,7 +8,9 @@ import java.util.Optional;
 
 /**
  *
- * @author u0002531
+ * @author r0711421
+ * @author Dieter
+ * Uren: 8 uur  -> zon 10 april 16:50           // regelmatig updaten
  */
 public class Main {
 

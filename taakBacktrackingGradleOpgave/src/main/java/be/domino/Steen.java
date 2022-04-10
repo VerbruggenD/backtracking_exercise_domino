@@ -5,12 +5,19 @@ import java.util.Objects;
 
 /**
  *
- * @author u0002531
+ * @author r0711421
  */
 public class Steen {
     private int ogen1, ogen2;
     private Color kleur;
     private boolean flipped;
+
+    public Steen(Steen steen) {     // copy constructor voor UnitTesten
+        this.ogen1 = steen.getOgen1();
+        this.ogen2 = steen.getOgen2();
+        this.kleur = steen.getKleur();
+        this.flipped = steen.isFlipped();
+    }
 
     public Steen(int ogen1, int ogen2, Color kleur) {
         this.ogen1 = ogen1;
