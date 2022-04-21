@@ -10,11 +10,11 @@ import java.util.Optional;
  *
  * @author r0711421
  * @author Dieter
- * Uren: 8 uur  -> zon 10 april 16:50           // regelmatig updaten
+ * Uren: 14 uur  -> don 14 april    21:32           // regelmatig updaten
  */
 public class Main {
 
-    private static String defaultInput = "12R 23G 32R 21P";
+    private static String defaultInput = "12R 21B 34Y";
 
     public static void main(String[] args) {
         String input;
@@ -24,8 +24,11 @@ public class Main {
         ArrayList<Steen> stenen = readStones(input);
         if (stenen.size() > 1) stenen.get(1).flip();
 
+        ArrayList<Steen> outputList = new ArrayList<>();
+        ArrayList<Steen> backtrackList = new ArrayList<>();
+
         Algoritme rekenaar = new Algoritme();
-        Optional<List<Steen>> oplossing = rekenaar.maakKetting(stenen);
+        Optional<ArrayList<Steen>> oplossing = rekenaar.maakKetting(stenen, outputList, backtrackList);
         if (oplossing.isEmpty()) {
             System.out.println("geen oplossing");
         }

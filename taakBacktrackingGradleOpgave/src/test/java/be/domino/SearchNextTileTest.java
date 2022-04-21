@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static be.domino.Main.readStones;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,12 +24,12 @@ public class SearchNextTileTest {
         // Act
 
         var resultaat = Algoritme.searchNextTile(list, begin);
-        if (resultaat.equals(referenceSteen)) found = true;
+        if (resultaat.get().equals(referenceSteen)) found = true;
 
         // Assert
 
         assertTrue(found);
-        assertFalse(resultaat.isFlipped());
+        assertFalse((resultaat.get()).isFlipped());
     }
 
     @Test
@@ -44,7 +45,7 @@ public class SearchNextTileTest {
 
         // Assert
 
-        assertFalse(list.contains(resultaat));
+        assertFalse(list.contains(resultaat.get()));
     }
 
     @Test
@@ -78,12 +79,12 @@ public class SearchNextTileTest {
         Steen steenFlipped = new Steen(list.get(2));
         var resultaat = Algoritme.searchNextTile(list, begin);
         steenFlipped.flip();
-        if (resultaat.equals(steenFlipped)) found = true;
+        if (resultaat.get().equals(steenFlipped)) found = true;
 
         // Assert
 
         assertTrue(found);
-        assertTrue(resultaat.isFlipped());
+        assertTrue(resultaat.get().isFlipped());
     }
 
     @Test
@@ -98,7 +99,7 @@ public class SearchNextTileTest {
         // Act
 
         var resultaat = Algoritme.searchNextTile(list, begin);
-        if (resultaat != null) found = true;
+        if (!resultaat.isEmpty()) found = true;
 
         // Assert
 
@@ -117,7 +118,7 @@ public class SearchNextTileTest {
         // Act
 
         var resultaat = Algoritme.searchNextTile(list, begin);
-        if (resultaat != null) found = true;
+        if (!resultaat.isEmpty()) found = true;
 
         // Assert
 
