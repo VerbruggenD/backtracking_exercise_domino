@@ -1,9 +1,6 @@
 package be.domino;
 
-import javax.crypto.spec.PSource;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,7 +41,7 @@ public class Algoritme {
                 }
             }
 
-            var geplaatsteSteen = plaatsSteen(todo, chainList, prevPlacedTiles);
+            var geplaatsteSteen = placeTile(todo, chainList, prevPlacedTiles);
             if (geplaatsteSteen.isPresent()) { // check of source leeg is
                 // source is niet leeg
                 if (geplaatsteSteen.get()) {
@@ -74,13 +71,13 @@ public class Algoritme {
         return solve(todo, chainList, prevPlacedTiles, outputGroup);
     }
 
-    public static boolean checkEyesAndFlip(Steen steen1, Steen steen2) {    // bij true mag steentje geplaatst worden
+    public static boolean checkEyesAndFlip(Steen tile1, Steen tile2) {    // bij true mag steentje geplaatst worden
         // checkColor() word eerder uitgevoerd
-        if (steen1.getOgen2() == steen2.getOgen1()) {
+        if (tile1.getOgen2() == tile2.getOgen1()) {
             return true;    // ogen 1 is juist, geen flip, wel een match
         } else {
-            if (steen1.getOgen2() == steen2.getOgen2()) {
-                steen2.flip();
+            if (tile1.getOgen2() == tile2.getOgen2()) {
+                tile2.flip();
                 return true;    // ogen 2 is juist, wel een flip, ook een match
             } else {
                 return false;   // geen ogen juist, geen flip, geen match
@@ -88,24 +85,24 @@ public class Algoritme {
         }
     }
 
-    public static boolean checkColor(Steen steen1, Steen steen2) {      // bij true mag checkEyesAndFlip() uitgevoerd worden
+    public static boolean checkColor(Steen tile1, Steen tile2) {      // bij true mag checkEyesAndFlip() uitgevoerd worden
         // kleuren ongelijk, wel een match
-        return steen1.getKleur() != steen2.getKleur();   // kleur is gelijk, geen match
+        return tile1.getKleur() != tile2.getKleur();   // kleur is gelijk, geen match
     }
 
-    public static boolean checkEyesClosing(Steen einde, Steen begin) {
-        return einde.getOgen2() == begin.getOgen1();
+    public static boolean checkEyesClosing(Steen end, Steen begin) {
+        return end.getOgen2() == begin.getOgen1();
     }
 
-    public static boolean checkChainClosing(Steen einde, Steen begin) {
-        return checkColor(einde, begin) && checkEyesClosing(einde, begin);
+    public static boolean checkChainClosing(Steen end, Steen begin) {
+        return checkColor(end, begin) && checkEyesClosing(end, begin);
     }
 
-    public static Optional<Steen> searchNextTile(ArrayList<Steen> list, Optional<Steen> steen, ArrayList<Steen> prevPlacedColumn) {
-        if (steen.isPresent()) {
+    public static Optional<Steen> searchNextTile(ArrayList<Steen> list, Optional<Steen> tile, ArrayList<Steen> prevPlacedColumn) {
+        if (tile.isPresent()) {
             for (Steen tempSteen : list) {
-                if (checkColor(steen.get(), tempSteen)) {
-                    if (checkEyesAndFlip(steen.get(), tempSteen)) {
+                if (checkColor(tile.get(), tempSteen)) {
+                    if (checkEyesAndFlip(tile.get(), tempSteen)) {
                         if (!checkPrevPlacedTiles(tempSteen, prevPlacedColumn)) {
                             list.remove(tempSteen);
                             return Optional.of(tempSteen);
@@ -143,38 +140,38 @@ public class Algoritme {
         return false;
     }
 
-    public static Optional<ArrayList<ArrayList<Steen>>> writePrevPlacedTile (Steen steen, ArrayList<ArrayList<Steen>> prevPlaced, int column) {
+    public static Optional<ArrayList<ArrayList<Steen>>> writePrevPlacedTile (Steen tile, ArrayList<ArrayList<Steen>> prevPlaced, int column) {
         if (prevPlaced.get(column) == null) {
             return Optional.empty();
         }
-        prevPlaced.get(column).add(steen);
+        prevPlaced.get(column).add(tile);
         return Optional.of(prevPlaced);
     }
 
-    public static Optional<Boolean> plaatsSteen(ArrayList<Steen> sourceList, ArrayList<Steen> destinationList, ArrayList<ArrayList<Steen>> prevPlaced) {
+    public static Optional<Boolean> placeTile(ArrayList<Steen> sourceList, ArrayList<Steen> destinationList, ArrayList<ArrayList<Steen>> prevPlaced) {
         if (!sourceList.isEmpty()) {
-            Optional<Steen> einde = Optional.empty();
+            Optional<Steen> end = Optional.empty();
             var index = 0;
 
             if (!destinationList.isEmpty()) {        // niet eerste steen plaatsen
                 index = destinationList.size();
-                einde = Optional.of(destinationList.get(index-1));
+                end = Optional.of(destinationList.get(index-1));
             }
 
-            var gevondenSteen = searchNextTile(sourceList, einde, prevPlaced.get(index));
-            if (gevondenSteen.isEmpty()) return Optional.of(false);     // niet kunnen plaatsen --> geen match
+            var foundTile = searchNextTile(sourceList, end, prevPlaced.get(index));
+            if (foundTile.isEmpty()) return Optional.of(false);     // niet kunnen plaatsen --> geen match
             else {
-                destinationList.add(gevondenSteen.get());
-                writePrevPlacedTile(gevondenSteen.get(), prevPlaced, index);     // prevPlaced update
+                destinationList.add(foundTile.get());
+                writePrevPlacedTile(foundTile.get(), prevPlaced, index);     // prevPlaced update
                 return Optional.of(true);    // kunnen plaatsen
             }
         } else return Optional.empty();  // fout! --> lege source of bug
     }
 
-    public static boolean verwijderSteen(ArrayList<Steen> source, ArrayList<Steen> dest, Steen verwijderdeSteen) {
-        if (dest.contains(verwijderdeSteen)) {
-            dest.remove(verwijderdeSteen);
-            source.add(verwijderdeSteen);
+    public static boolean removeTile(ArrayList<Steen> source, ArrayList<Steen> dest, Steen removedTile) {
+        if (dest.contains(removedTile)) {
+            dest.remove(removedTile);
+            source.add(removedTile);
             return true;
         } else return false;
     }
@@ -189,7 +186,7 @@ public class Algoritme {
             }
 
             var backtrackSteen = dest.get(index);
-            if (verwijderSteen(source, dest, backtrackSteen)) return true;
+            if (removeTile(source, dest, backtrackSteen)) return true;
         }
         return false;
     }
@@ -197,8 +194,8 @@ public class Algoritme {
     public static void writeChain(ArrayList<Steen> solution, ArrayList<ArrayList<Steen>> outputGroup) {
         if (!outputGroup.contains(solution)) {
             ArrayList<Steen> copy = new ArrayList<>();
-            for (Steen steen : solution) {
-                copy.add(steen);
+            for (Steen tile : solution) {
+                copy.add(tile);
             }
             outputGroup.add(copy);
         }

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BacktrackTest {
 
     @Test
-    public void Algoritme_backtrack_kettingSluiten_expectsTrue() {
+    public void Algoritme_backtrack_closeChain_expectsTrue() {
         // Arrange
         ArrayList<Steen> source = new ArrayList<>();
 
@@ -21,18 +21,14 @@ public class BacktrackTest {
         dest.add(new Steen(2,3,Color.YELLOW));
         dest.add(new Steen(3,1,Color.blue));
         dest.add(new Steen(1,5,Color.GREEN));
-
         // Act
-
-        var result = Algoritme.backtrack(source, dest, prevPlacedTiles);
-
+        Algoritme.backtrack(source, dest, prevPlacedTiles);
         // Assert
-
         assertTrue(Algoritme.checkChainClosing(dest.get(dest.size()-1), dest.get(0)));
     }
 
     @Test
-    public void Algoritme_backtrack_kettingNietSluiten_expectsFalse_doeBacktrack() {
+    public void Algoritme_backtrack_notClosingChain_expectsFalse_doBacktrack() {
         // Arrange
         ArrayList<Steen> source = new ArrayList<>();
 
@@ -44,20 +40,16 @@ public class BacktrackTest {
         dest.add(new Steen(3,2,Color.blue));
 
         var originalSize = dest.size();
-
         // Act
-
-        var result = Algoritme.backtrack(source, dest, prevPlacedTiles);
+        Algoritme.backtrack(source, dest, prevPlacedTiles);
         var sizeNow = dest.size();
-
         // Assert
-
         assertFalse(Algoritme.checkChainClosing(dest.get(dest.size()-1), dest.get(0)));
         assertFalse(originalSize<sizeNow);
     }
 
     @Test
-    public void Algoritme_backtrack_nieuwBegin_expectsSame() {
+    public void Algoritme_backtrack_newBeginTile_expectsSame() {
         // Arrange
         var steen = new Steen(3,4,Color.BLUE);
 
@@ -68,14 +60,10 @@ public class BacktrackTest {
 
         ArrayList<Steen> dest = new ArrayList<>();
         dest.add(new Steen(1,2, Color.RED));
-
         // Act
-
-        var result = Algoritme.backtrack(source, dest, prevPlacedTiles);
-        Algoritme.plaatsSteen(source, dest, prevPlacedTiles);
-
+        Algoritme.backtrack(source, dest, prevPlacedTiles);
+        Algoritme.placeTile(source, dest, prevPlacedTiles);
         // Assert
-
         assertSame(dest.get(0), steen);
     }
 
@@ -93,16 +81,11 @@ public class BacktrackTest {
         var prevPlacedTiles = Algoritme.make2DArrayList(4);
         prevPlacedTiles.get(2).add(new Steen(1,2,Color.RED));
         prevPlacedTiles.get(2).add((new Steen(3,4,Color.GREEN)));
-
         // Act
-
         var result1 = Algoritme.backtrack(source, dest, prevPlacedTiles);
         Algoritme.backtrack(source, dest, prevPlacedTiles);
-
         // Assert
-
         assertTrue(result1);
         assertTrue(prevPlacedTiles.get(2).isEmpty());
-
     }
 }

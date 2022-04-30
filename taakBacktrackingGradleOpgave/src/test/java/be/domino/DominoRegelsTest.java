@@ -11,7 +11,7 @@ public class DominoRegelsTest {
 
     // !!! check functie test voor blokje achteraan toevoegen
     @Test
-    public void Algoritme_checkOgen_2DezelfdeOgen_unFlipped_expectTrue() {  // enkel naar de ogen kijken
+    public void Algoritme_checkEyes_2SameEyes_unFlipped_expectTrue() {  // enkel naar de ogen kijken
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);
         var steen2 = new Steen(2,3,Color.RED);
@@ -23,7 +23,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkOgen_2DezelfdeOgen_flipped_expectTrue() {  // enkel naar de ogen kijken
+    public void Algoritme_checkEyes_2SameEyes_flipped_expectTrue() {  // enkel naar de ogen kijken
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);
         var steen2 = new Steen(3,2,Color.RED);
@@ -35,7 +35,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkOgen_2VerschillendeOgen_expectFalse() { // enkel naar de ogen kijken
+    public void Algoritme_checkEyes_2DifferentEyes_expectFalse() { // enkel naar de ogen kijken
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);
         var steen2 = new Steen(3,4,Color.RED);
@@ -49,7 +49,7 @@ public class DominoRegelsTest {
     // check functie test voor kleur
 
     @Test
-    public void Algoritme_checkKleur_2VerschillendeKleuren_expectTrue() { // enkel naar de kleur kijken
+    public void Algoritme_checkColor_2SameColors_expectTrue() { // enkel naar de kleur kijken
         // Arrange
         var steen1 = new Steen(1, 2, Color.YELLOW);
         var steen2 = new Steen(2,3,Color.RED);
@@ -60,7 +60,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkKleur_2DezelfdeKleuren_expectFalse() { // enkel naar de kleur kijken
+    public void Algoritme_checkColor_2SameColors_expectFalse() { // enkel naar de kleur kijken
         // Arrange
         var steen1 = new Steen(1, 2, Color.YELLOW);
         var steen2 = new Steen(2,3,Color.YELLOW);
@@ -73,7 +73,7 @@ public class DominoRegelsTest {
     // check functie test voor ketting te sluiten --> enkel naar ogen kijken zonder te flippen
 
     @Test
-    public void Algoritme_checkOgenSluiten_2DezelfdeOgen_expectTrue() {
+    public void Algoritme_checkEyesClosing_2SameEyes_expectTrue() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(2,3,Color.RED);  // dit is de tail
@@ -84,7 +84,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkOgenSluiten_2VerschillendeOgen_expectFalse() {
+    public void Algoritme_checkEyesClosing_2SameEyes_expectFalse() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(3,4,Color.RED);  // dit is de tail
@@ -95,7 +95,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkKettingSluit_2DezelfdeOgen_verschillendeKleur_expectTrue() {
+    public void Algoritme_checkChainClosing_2SameEyes_differentColor_expectTrue() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(2,4,Color.RED);  // dit is de tail
@@ -106,7 +106,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkKettingSluit_2VerschillendeOgen_verschillendeKleur_expectFalse() {
+    public void Algoritme_checkChainClosing_2DifferentEyes_differentColor_expectFalse() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(3,4,Color.RED);  // dit is de tail
@@ -117,7 +117,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkKettingSluit_2DezelfdeOgen_dezelfdeKleur_expectFalse() {
+    public void Algoritme_checkChainClosing_2SameEyes_sameColor_expectFalse() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(2,4,Color.YELLOW);  // dit is de tail
@@ -128,7 +128,7 @@ public class DominoRegelsTest {
     }
 
     @Test
-    public void Algoritme_checkKettingSluit_2VerschillendeOgen_dezelfdeKleur_expectFalse() {
+    public void Algoritme_checkChainClosing_2DifferentEyes_sameColor_expectFalse() {
         // Arrange
         var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
         var steen2 = new Steen(3,4,Color.YELLOW);  // dit is de tail

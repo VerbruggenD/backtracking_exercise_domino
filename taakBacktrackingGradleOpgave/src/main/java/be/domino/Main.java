@@ -10,7 +10,7 @@ import java.util.Optional;
  *
  * @author r0711421
  * @author Dieter
- * Uren: 14 uur  -> don 14 april    21:32           // regelmatig updaten
+ * Uren aan besteed: 32 uur  -> don 30 april    14:23
  */
 public class Main {
 

@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class verwijderSteenTest {
+public class RemoveTileTest {
 
     @Test
-    public void Algoritme_verwijderSteen_doesObjectToBeRemovedExists_expectsTrue () {
+    public void Algoritme_removeTile_doesObjectToBeRemovedExists_expectsTrue () {
         // Arrange
-
         ArrayList<Steen> dest = new ArrayList<>();
         dest.add(new Steen(1,2,Color.RED));
         dest.add(new Steen(2,3,Color.YELLOW));
@@ -22,24 +21,18 @@ public class verwijderSteenTest {
         var removedTile = new Steen(3,4,Color.GREEN);
 
         ArrayList<Steen> source = new ArrayList<>();
-
         // Act
-
         var originalSize = dest.size();
-        Algoritme.verwijderSteen(source, dest, removedTile);
+        Algoritme.removeTile(source, dest, removedTile);
         var sizeNow = dest.size();
-
         // Assert
-
         assertFalse(source.isEmpty());
         assertTrue(originalSize > sizeNow);
-
     }
 
     @Test
-    public void Algoritme_verwijderSteen_doesObjectToBeRemovedExists_expectsFalse () {
+    public void Algoritme_removeTile_doesObjectToBeRemovedExists_expectsFalse () {
         // Arrange
-
         ArrayList<Steen> dest = new ArrayList<>();
         dest.add(new Steen(1,2,Color.RED));
         dest.add(new Steen(2,3,Color.YELLOW));
@@ -48,17 +41,12 @@ public class verwijderSteenTest {
         var removedTile = new Steen(4,3,Color.GREEN);
 
         ArrayList<Steen> source = new ArrayList<>();
-
         // Act
-
         var originalSize = dest.size();
-        Algoritme.verwijderSteen(dest, source, removedTile);
+        Algoritme.removeTile(dest, source, removedTile);
         var sizeNow = dest.size();
-
         // Assert
-
         assertTrue(source.isEmpty());
         assertFalse(originalSize > sizeNow);
-
     }
 }
