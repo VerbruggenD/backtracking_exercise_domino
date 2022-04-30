@@ -14,24 +14,24 @@ public class verwijderSteenTest {
     public void Algoritme_verwijderSteen_doesObjectToBeRemovedExists_expectsTrue () {
         // Arrange
 
-        ArrayList<Steen> ketting = new ArrayList<>();
-        ketting.add(new Steen(1,2,Color.RED));
-        ketting.add(new Steen(2,3,Color.YELLOW));
-        ketting.add(new Steen(3,4,Color.GREEN));
+        ArrayList<Steen> dest = new ArrayList<>();
+        dest.add(new Steen(1,2,Color.RED));
+        dest.add(new Steen(2,3,Color.YELLOW));
+        dest.add(new Steen(3,4,Color.GREEN));
 
         var removedTile = new Steen(3,4,Color.GREEN);
 
-        ArrayList<Steen> backtrackList = new ArrayList<>();
+        ArrayList<Steen> source = new ArrayList<>();
 
         // Act
 
-        var originalSize = ketting.size();
-        Algoritme.verwijderSteen(ketting, backtrackList, removedTile);
-        var sizeNow = ketting.size();
+        var originalSize = dest.size();
+        Algoritme.verwijderSteen(source, dest, removedTile);
+        var sizeNow = dest.size();
 
         // Assert
 
-        assertFalse(backtrackList.isEmpty());
+        assertFalse(source.isEmpty());
         assertTrue(originalSize > sizeNow);
 
     }
@@ -40,24 +40,24 @@ public class verwijderSteenTest {
     public void Algoritme_verwijderSteen_doesObjectToBeRemovedExists_expectsFalse () {
         // Arrange
 
-        ArrayList<Steen> ketting = new ArrayList<>();
-        ketting.add(new Steen(1,2,Color.RED));
-        ketting.add(new Steen(2,3,Color.YELLOW));
-        ketting.add(new Steen(3,4,Color.GREEN));
+        ArrayList<Steen> dest = new ArrayList<>();
+        dest.add(new Steen(1,2,Color.RED));
+        dest.add(new Steen(2,3,Color.YELLOW));
+        dest.add(new Steen(3,4,Color.GREEN));
 
         var removedTile = new Steen(4,3,Color.GREEN);
 
-        ArrayList<Steen> backtrackList = new ArrayList<>();
+        ArrayList<Steen> source = new ArrayList<>();
 
         // Act
 
-        var originalSize = ketting.size();
-        Algoritme.verwijderSteen(ketting, backtrackList, removedTile);
-        var sizeNow = ketting.size();
+        var originalSize = dest.size();
+        Algoritme.verwijderSteen(dest, source, removedTile);
+        var sizeNow = dest.size();
 
         // Assert
 
-        assertTrue(backtrackList.isEmpty());
+        assertTrue(source.isEmpty());
         assertFalse(originalSize > sizeNow);
 
     }

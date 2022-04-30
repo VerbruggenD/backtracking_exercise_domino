@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,10 +22,12 @@ public class PlaatsSteenTest {
 
         Steen steen = new Steen(sourceList.get(0));
 
+        var prevPlaced = Algoritme.make2DArrayList(4);
+
         // Act
 
-        var result = Algoritme.plaatsSteen(sourceList,destinList);
-        var sizeSource = sourceList.size();
+        var result = Algoritme.plaatsSteen(sourceList,destinList, prevPlaced);
+
         var sizeDest = destinList.size();
 
         // Assert
@@ -34,6 +35,7 @@ public class PlaatsSteenTest {
         assertTrue(result.get());
         assertTrue(sizeDest == 2);
         assertTrue(destinList.contains(steen));
+        //assertTrue(steen.equals(placedSteen));
     }
 
     @Test
@@ -47,11 +49,13 @@ public class PlaatsSteenTest {
         ArrayList<Steen> destinList = new ArrayList<>();
         destinList.add(new Steen(1,1,Color.BLUE));
 
+        var prevPlaced = Algoritme.make2DArrayList(4);
+
         Steen steen = new Steen(sourceList.get(0));
 
         // Act
 
-        var result = Algoritme.plaatsSteen(sourceList,destinList);
+        var result = Algoritme.plaatsSteen(sourceList,destinList, prevPlaced);
         var sizeSource = sourceList.size();
 
         // Assert
@@ -70,9 +74,11 @@ public class PlaatsSteenTest {
         ArrayList<Steen> destinList = new ArrayList<>();
         destinList.add(new Steen(1,1,Color.BLUE));
 
+        var prevPlaced = Algoritme.make2DArrayList(4);
+
         // Act
 
-        var result = Algoritme.plaatsSteen(sourceList,destinList);
+        var result = Algoritme.plaatsSteen(sourceList,destinList, prevPlaced);
 
         // Assert
 
@@ -90,12 +96,14 @@ public class PlaatsSteenTest {
         ArrayList<Steen> destinList = new ArrayList<>();
         destinList.add(new Steen(1,1,Color.BLUE));
 
+        var prevPlaced = Algoritme.make2DArrayList(4);
+
         var errorThrown = false;
 
         // Act
 
         var originalSize = sourceList.size();
-        var result = Algoritme.plaatsSteen(sourceList, destinList);
+        var result = Algoritme.plaatsSteen(sourceList, destinList, prevPlaced);
         var sizeNow = sourceList.size();
 
         if (!result.get()) {
@@ -118,15 +126,13 @@ public class PlaatsSteenTest {
 
         ArrayList<Steen> destinListEmpty = new ArrayList<>();
 
-        var errorThrown = false;
+        var prevPlaced = Algoritme.make2DArrayList(4);
 
         // Act
 
         var originalSizeDest = destinListEmpty.size();
-        var result = Algoritme.plaatsSteen(sourceList, destinListEmpty);
+        var result = Algoritme.plaatsSteen(sourceList, destinListEmpty, prevPlaced);
         var newSizeDest = destinListEmpty.size();
-
-        if (result.isEmpty()) errorThrown = true;
 
         // Assert
 
@@ -134,5 +140,29 @@ public class PlaatsSteenTest {
         assertEquals(1, newSizeDest);
         assertTrue(result.get());
 
+    }
+
+    @Test
+    public void Algoritme_plaatsSteen_alreadyTriedThisTile_expectsfalse () {
+        // Arrange
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(1).add(new Steen(1,2,Color.RED));
+        prevPlacedTiles.get(1).add(new Steen(1,3,Color.YELLOW));
+
+        ArrayList<Steen> dest = new ArrayList<>();
+        dest.add(new Steen(1,1,Color.BLUE));
+
+        ArrayList<Steen> source = new ArrayList<>();
+        source.add(new Steen(1,2,Color.RED));
+        source.add(new Steen(1,3,Color.YELLOW));
+
+        // Act
+
+        var result = Algoritme.plaatsSteen(source, dest, prevPlacedTiles);
+
+        // Assert
+
+        assertFalse(result.get());
     }
 }

@@ -17,13 +17,19 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(4,3,Color.YELLOW);
-        ArrayList<Steen> list = readStones("12R 21G 32R 21P");
-        Steen referenceSteen = new Steen(list.get(2));
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
+        Steen referenceSteen = new Steen(source.get(2));
         boolean found = false;
+
+        var column = 1;
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(column).add(new Steen(1,2,Color.RED));
+        prevPlacedTiles.get(column).add(new Steen(3,1,Color.YELLOW));       // gaat zoeken voor plaats 2 in de ketting
 
         // Act
 
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
         if (resultaat.get().equals(referenceSteen)) found = true;
 
         // Assert
@@ -37,15 +43,19 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(4,3,Color.YELLOW);
-        ArrayList<Steen> list = readStones("12R 21G 32R 21P");
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+
+        var column = 1;
 
         // Act
 
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
 
         // Assert
 
-        assertFalse(list.contains(resultaat.get()));
+        assertFalse(source.contains(resultaat.get()));
     }
 
     @Test
@@ -53,16 +63,22 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(4,3,Color.YELLOW);
-        ArrayList<Steen> list = readStones("12R 21G 32R 21P");
-        Steen steen2 = new Steen(list.get(1));
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
+        Steen steen2 = new Steen(source.get(1));
+
+        var column = 1;
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(column).add(new Steen(1,2,Color.RED));
+        prevPlacedTiles.get(column).add(new Steen(3,1,Color.YELLOW));
 
         // Act
 
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
 
         // Assert
 
-        assertTrue(list.contains(steen2));
+        assertTrue(source.contains(steen2));
     }
 
     @Test
@@ -70,14 +86,20 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(4,3,Color.YELLOW);
-        ArrayList<Steen> list = readStones("12R 21G 23R 21P");
+        ArrayList<Steen> source = readStones("12R 21G 23R 21P");
 
         boolean found = false;
 
+        var column = 1;
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(column).add(new Steen(1,2,Color.RED));
+        prevPlacedTiles.get(column).add(new Steen(3,1,Color.YELLOW));
+
         // Act
 
-        Steen steenFlipped = new Steen(list.get(2));
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        Steen steenFlipped = new Steen(source.get(2));
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
         steenFlipped.flip();
         if (resultaat.get().equals(steenFlipped)) found = true;
 
@@ -92,13 +114,17 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(4,4,Color.YELLOW);
-        ArrayList<Steen> list = readStones("12R 21G 32R 21P");
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
 
         boolean found = false;
 
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+
+        var column = 1;
+
         // Act
 
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
         if (!resultaat.isEmpty()) found = true;
 
         // Assert
@@ -111,13 +137,17 @@ public class SearchNextTileTest {
         // Arrange
 
         Steen begin = new Steen(1,3,Color.RED);
-        ArrayList<Steen> list = readStones("12R 21G 32R 21P");
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
 
         boolean found = false;
 
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+
+        var column = 1;
+
         // Act
 
-        var resultaat = Algoritme.searchNextTile(list, begin);
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
         if (!resultaat.isEmpty()) found = true;
 
         // Assert
@@ -125,4 +155,47 @@ public class SearchNextTileTest {
         assertFalse(found);
     }
 
+    @Test
+    public void Algoritme_searchNextTile_4items_findNothing_alreadyTried_expectFalse() {
+        // Arrange
+
+        Steen begin = new Steen(1,3,Color.YELLOW);
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
+
+        var column = 1;
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(column).add(new Steen(3,2,Color.RED));
+
+        // Act
+
+        var resultaat = Algoritme.searchNextTile(source, Optional.of(begin), prevPlacedTiles.get(column));
+
+        // Assert
+
+        assertFalse(resultaat.isPresent());
+    }
+
+    @Test
+    public void Algoritme_searchNextTile_4items_newFirstTile_finds2th_expectTrue() {
+        // Arrange
+
+        Steen begin = new Steen(1, 3, Color.YELLOW);
+        ArrayList<Steen> source = readStones("12R 21G 32R 21P");
+
+        var steen = new Steen(2, 1, Color.GREEN);
+
+        var column = 0;
+
+        var prevPlacedTiles = Algoritme.make2DArrayList(4);
+        prevPlacedTiles.get(column).add(new Steen(1, 2, Color.RED));
+
+        // Act
+
+        var result = Algoritme.searchNextTile(source, Optional.empty(), prevPlacedTiles.get(column));
+
+        // Assert
+
+        assertTrue(steen.equals(result.get()));
+    }
 }

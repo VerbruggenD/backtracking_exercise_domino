@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class Main {
 
-    private static String defaultInput = "12R 21B 34Y";
+    private static String defaultInput = "12R 16R 23G 34B";
 
     public static void main(String[] args) {
         String input;
@@ -24,16 +24,15 @@ public class Main {
         ArrayList<Steen> stenen = readStones(input);
         if (stenen.size() > 1) stenen.get(1).flip();
 
-        ArrayList<Steen> outputList = new ArrayList<>();
-        ArrayList<Steen> backtrackList = new ArrayList<>();
-
         Algoritme rekenaar = new Algoritme();
-        Optional<ArrayList<Steen>> oplossing = rekenaar.maakKetting(stenen, outputList, backtrackList);
+        var oplossing = rekenaar.maakKetting(stenen);
         if (oplossing.isEmpty()) {
             System.out.println("geen oplossing");
         }
         else {
-            System.out.println(oplossing.get());
+            for (ArrayList<Steen> column : oplossing.get() ) {
+                System.out.println(column);
+            }
         }
     }
 

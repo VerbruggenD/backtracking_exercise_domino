@@ -93,4 +93,48 @@ public class DominoRegelsTest {
         // Assert
         assertFalse(resultaat);
     }
+
+    @Test
+    public void Algoritme_checkKettingSluit_2DezelfdeOgen_verschillendeKleur_expectTrue() {
+        // Arrange
+        var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
+        var steen2 = new Steen(2,4,Color.RED);  // dit is de tail
+        // Act
+        var resultaat = Algoritme.checkChainClosing(steen1, steen2);
+        // Assert
+        assertTrue(resultaat);
+    }
+
+    @Test
+    public void Algoritme_checkKettingSluit_2VerschillendeOgen_verschillendeKleur_expectFalse() {
+        // Arrange
+        var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
+        var steen2 = new Steen(3,4,Color.RED);  // dit is de tail
+        // Act
+        var resultaat = Algoritme.checkChainClosing(steen1, steen2);
+        // Assert
+        assertFalse(resultaat);
+    }
+
+    @Test
+    public void Algoritme_checkKettingSluit_2DezelfdeOgen_dezelfdeKleur_expectFalse() {
+        // Arrange
+        var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
+        var steen2 = new Steen(2,4,Color.YELLOW);  // dit is de tail
+        // Act
+        var resultaat = Algoritme.checkChainClosing(steen1, steen2);
+        // Assert
+        assertFalse(resultaat);
+    }
+
+    @Test
+    public void Algoritme_checkKettingSluit_2VerschillendeOgen_dezelfdeKleur_expectFalse() {
+        // Arrange
+        var steen1 = new Steen(1,2, Color.YELLOW);  // dit is de head
+        var steen2 = new Steen(3,4,Color.YELLOW);  // dit is de tail
+        // Act
+        var resultaat = Algoritme.checkChainClosing(steen1, steen2);
+        // Assert
+        assertFalse(resultaat);
+    }
 }
